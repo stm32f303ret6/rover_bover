@@ -1,0 +1,5 @@
+mujoco>=3.1
+numpy
+glfw
+trimesh      # only for tools/build_rover.py
+pytest       # only for tests/

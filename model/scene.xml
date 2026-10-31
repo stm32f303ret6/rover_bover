@@ -1,0 +1,34 @@
+<mujoco model="papaya_pathfinder_scene">
+  <!-- Terrain is a 512x512 heightfield filled at runtime by terrains.py (zeros = flat).
+       The size is fixed and generous because MuJoCo computes the hfield bounding box at
+       compile time: x/y half extents are shrunk per terrain, elevation stays 3 m. -->
+  <option gravity="0 0 -9.81"/>
+
+  <visual>
+    <headlight diffuse="0.6 0.6 0.6" ambient="0.35 0.35 0.35" specular="0.1 0.1 0.1"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <global azimuth="135" elevation="-20" offwidth="1280" offheight="960"/>
+    <map znear="0.01" zfar="60"/>
+    <quality shadowsize="4096"/>
+  </visual>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.45 0.6 0.8" rgb2="0.1 0.12 0.2" width="512" height="3072"/>
+    <texture type="2d" name="ground" builtin="checker" mark="edge" rgb1="0.42 0.36 0.28" rgb2="0.34 0.29 0.22"
+      markrgb="0.25 0.22 0.18" width="300" height="300"/>
+    <material name="ground" texture="ground" texuniform="true" texrepeat="4 4" reflectance="0.05"/>
+    <hfield name="terrain" nrow="512" ncol="512" size="10 10 3 0.5"/>
+  </asset>
+
+  <worldbody>
+    <light pos="0 0 6" dir="0.2 0.1 -1" directional="true" diffuse="0.8 0.8 0.8" castshadow="true"/>
+    <light pos="-3 -3 4" dir="0.5 0.5 -1" directional="true" diffuse="0.3 0.3 0.3" castshadow="false"/>
+    <geom name="terrain" type="hfield" hfield="terrain" material="ground" friction="1.0 0.005 0.0001"/>
+    <!-- origin marker: x red, y green, z blue -->
+    <geom type="capsule" size="0.004" fromto="0 0 0.002 0.3 0 0.002" rgba="1 0 0 1" contype="0" conaffinity="0" group="2"/>
+    <geom type="capsule" size="0.004" fromto="0 0 0.002 0 0.3 0.002" rgba="0 1 0 1" contype="0" conaffinity="0" group="2"/>
+    <geom type="capsule" size="0.004" fromto="0 0 0 0 0 0.3" rgba="0 0 1 1" contype="0" conaffinity="0" group="2"/>
+  </worldbody>
+
+  <include file="rover.xml"/>
+</mujoco>
