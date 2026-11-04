@@ -1,0 +1,25 @@
+# ESP32 Flash Pipeline Configuration
+# Edit these values to match your setup
+
+# Raspberry Pi SSH connection
+pi:
+  host: 10.0.0.1
+  user: rsc
+  # Directory on Pi where binaries are staged before flashing
+  deploy_dir: /tmp/esp32
+
+# ESP32 board settings
+esp32:
+  # Board FQBN (Fully Qualified Board Name)
+  fqbn: esp32:esp32:esp32
+  # Serial port on the Pi (run: ls /dev/ttyUSB* /dev/ttyACM*)
+  port: /dev/ttyUSB0
+  # Baud rate for flashing
+  baud: 460800
+
+# Local build settings
+build:
+  # Sketch directory (relative to this config file)
+  sketch_dir: sketch
+  # Build output directory
+  build_dir: build
